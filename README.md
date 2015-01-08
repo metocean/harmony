@@ -1,3 +1,3 @@
-# Harmony Redwire
+# Harmony
 
 Daemon for redwire
