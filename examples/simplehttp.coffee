@@ -6,3 +6,4 @@ module.exports =
       .use (mount, url, req, res, next) ->
         res.write 'OK'
         res.end()
+

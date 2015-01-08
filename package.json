@@ -1,6 +1,6 @@
 {
   "name": "harmony-redwire",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Daemon for redwire",
   "bin": {
     "harmony": "bin/harmony.js"

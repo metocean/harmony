@@ -40,72 +40,77 @@ module.exports = class Harmony
   tick: => dirdiff @_options.configdir, @config, @update
   
   update: (added, removed, modified, unchanged) =>
+    keystocreate = []
+    
     for key, value of removed
+      console.log "Deleting #{key}..."
       delete @config[key]
       @unload key
+    
     for key, value of modified
+      def = @read key
+      continue if !def?
       @config[key] = value
-      @transfer key
+      
+      # Configuration different, need to recreate
+      source = JSON.stringify @redwires[key].def.config
+      target = JSON.stringify def.config
+      if source isnt target
+        console.log "#{source} isnt #{target}"
+        console.log "Recreating #{key}..."
+        @unload key
+        @redwires[key] = def: def
+        keystocreate.push key
+        continue
+      
+      console.log "Migrating #{key}..."
+      @redwires[key].def.end() if @redwires[key].def.end?
+      @redwires[key].def = def
+      @bind key
+    
     for key, value of added
+      def = @read key
+      continue if !def?
       @config[key] = value
-      @load key
+      @redwires[key] = def: def
+      console.log "Creating #{key}..."
+      keystocreate.push key
+    
+    # create everything last so conflicts don't occur
+    @create key for key in keystocreate
+  
+  read: (key) =>
+    try
+      return require_raw "#{@_options.configdir}/#{key}"
+    catch e
+      @error e
+      return null
   
   create: (key) =>
-    console.log "Creating #{key}..."
-    item = @redwires[key].item
-    if !item.config.log?
-      item.config.log = {}
-    item.config.log.notice = (message) ->
-        console.log message
-    redwire = new Redwire item.config
+    def = @redwires[key].def
+    # Copy configuration so we can modify it and still compare
+    config = {}
+    config[k] = v for k, v of def.config
+    config.log = {} if !config.log?
+    config.log.notice = (message) -> console.log message
+    redwire = new Redwire config
     @redwires[key].redwire = redwire
     @bind key
   
   bind: (key) =>
-    console.log "Binding #{key}..."
-    { item, redwire } = @redwires[key]
+    { def, redwire } = @redwires[key]
     bindings = redwire.createNewBindings()
-    item.bind redwire, bindings
+    def.bind redwire, bindings
     redwire.setBindings bindings
   
-  load: (key) =>
-    console.log "Loading #{key}..."
-    try
-      item = require_raw "#{@_options.configdir}/#{key}"
-      @redwires[key] = item: item
-      @create key
-    catch e
-      delete @config[key]
-      return @error e
-  
-  transfer: (key) =>
-    try
-      item = require_raw "#{@_options.configdir}/#{key}"
-    catch e
-      return @error e
-    
-    # Configuration different, need to unload and load
-    if JSON.stringify(@redwires[key].item.config) isnt JSON.stringify(item.config)
-      console.log "Reloading #{key}..."
-      @unload key
-      @redwires[key] = item: item
-      @create key
-      return
-    
-    console.log "Migrating #{key}..."
-    @redwires[key].item.end() if @redwires[key].item.end?
-    @redwires[key].item = item
-    @bind key
-  
   unload: (key) =>
-    console.log "Unloading #{key}..."
-    { item, redwire } = @redwires[key]
-    item.end() if item.end?
+    { def, redwire } = @redwires[key]
+    def.end() if def.end?
     redwire.close()
     delete @redwires[key]
   
   close: =>
     clearInterval @_interval
-    for _, item of @redwires
-      item.item.end() if item.item.end?
-      item.redwire.close()
+    for _, def of @redwires
+      def.def.end() if def.def.end?
+      def.redwire.close()
