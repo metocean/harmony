@@ -1,0 +1,23 @@
+{
+  "name": "harmony-redwire",
+  "version": "0.0.1",
+  "description": "Daemon for redwire",
+  "bin": {
+    "harmony": "bin/harmony.js"
+  },
+  "dependencies": {
+    "colors": "1.0.3",
+    "redwire": "*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:metocean/harmony-redwire.git"
+  },
+  "author": "Thomas Coats",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/metocean/harmony-redwire/issues"
+  },
+  "readmeFilename": "README.md",
+  "homepage": "https://github.com/metocean/harmony-redwire"
+}
