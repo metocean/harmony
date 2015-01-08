@@ -1,5 +1,5 @@
 {
-  "name": "harmony-redwire",
+  "name": "redwire-harmony",
   "version": "1.0.0",
   "description": "Daemon for redwire",
   "bin": {
@@ -11,13 +11,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:metocean/harmony-redwire.git"
+    "url": "git@github.com:metocean/redwire-harmony.git"
   },
   "author": "Thomas Coats",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/metocean/harmony-redwire/issues"
+    "url": "https://github.com/metocean/redwire-harmony/issues"
   },
   "readmeFilename": "README.md",
-  "homepage": "https://github.com/metocean/harmony-redwire"
+  "homepage": "https://github.com/metocean/redwire-harmony"
 }
