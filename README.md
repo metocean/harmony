@@ -22,7 +22,9 @@ harmony
 
 To reload any changes send a SIGHUP to the harmony daemon
 
-## Examples
+## Example
+
+Save this file into a directory as `example.js` and run `harmony`.
 
 ```js
 module.exports = {
