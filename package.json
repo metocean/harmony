@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "colors": "1.0.3",
-    "redwire": "*"
+    "redwire": "1.0.0"
   },
   "repository": {
     "type": "git",
