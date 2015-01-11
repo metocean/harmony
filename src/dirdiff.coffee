@@ -7,7 +7,7 @@ module.exports = (dir, current, callback) ->
   u = {}
   
   pool = {}
-  pool[key] = value for key, value of current
+  pool[k] = v for k, v of current
   
   try
     items = fs.readdirSync dir
@@ -32,6 +32,6 @@ module.exports = (dir, current, callback) ->
       a[item] = path: path, changed: stat.mtime.getTime()
   
   # Anything left over is deleted
-  d[key] = value for key, value of pool
+  d[k] = v for k, v of pool
   
   callback a, d, m, u

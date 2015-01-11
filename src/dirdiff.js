@@ -4,15 +4,15 @@ var fs;
 fs = require('fs');
 
 module.exports = function(dir, current, callback) {
-  var a, d, e, item, items, key, m, path, pool, stat, u, value, _i, _len;
+  var a, d, e, item, items, k, m, path, pool, stat, u, v, _i, _len;
   a = {};
   d = {};
   m = {};
   u = {};
   pool = {};
-  for (key in current) {
-    value = current[key];
-    pool[key] = value;
+  for (k in current) {
+    v = current[k];
+    pool[k] = v;
   }
   try {
     items = fs.readdirSync(dir);
@@ -48,9 +48,9 @@ module.exports = function(dir, current, callback) {
       };
     }
   }
-  for (key in pool) {
-    value = pool[key];
-    d[key] = value;
+  for (k in pool) {
+    v = pool[k];
+    d[k] = v;
   }
   return callback(a, d, m, u);
 };
