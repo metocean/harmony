@@ -144,6 +144,7 @@ module.exports = Harmony = (function() {
     config.log.notice = function(message) {
       return console.log(message);
     };
+    config.log.error = this.error;
     redwire = new Redwire(config);
     this.redwires[key].redwire = redwire;
     return this.bind(key);

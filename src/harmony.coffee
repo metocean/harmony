@@ -93,6 +93,7 @@ module.exports = class Harmony
     config[k] = v for k, v of def.config
     config.log = {} if !config.log?
     config.log.notice = (message) -> console.log message
+    config.log.error = @error
     redwire = new Redwire config
     @redwires[key].redwire = redwire
     @bind key
