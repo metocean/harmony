@@ -1,13 +1,13 @@
 {
   "name": "redwire-harmony",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Daemon for redwire",
   "bin": {
     "harmony": "bin/harmony.js"
   },
   "dependencies": {
     "colors": "1.0.3",
-    "redwire": "1.4.0"
+    "redwire": "1.4.1"
   },
   "repository": {
     "type": "git",
